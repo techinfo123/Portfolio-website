@@ -1,326 +1,713 @@
-<!DOCTYPE HTML>
-<html>
-  <head>
-    <title>Atishay's 3D Portfolio</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <style>
-      body {
-        margin: 0;
-        background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
-        font-family: 'Orbitron', sans-serif;
-        color: #fff;
-        overflow-x: hidden;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Atishay Jain | GenAI Engineer & Robotics Lead</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Orbitron:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --black: #131417;
+      --deep: #18191d;
+      --panel: #1d1f24;
+      --white: #f6f9fc;
+      --subtle: #bfc2cc;
+      --primary: #2effb4;
+      --primary-faint: #2effb430;
+      --hero-green: #2effb4;
+      --hero-gray: #bfc2cc;
+      --radius: 23px;
+      --font-head: 'Orbitron','Inter',sans-serif;
+      --font-body: 'Inter',sans-serif;
+    }
+    html, body {
+      background: var(--deep);
+      color: var(--white);
+      min-height: 100%;
+      margin: 0;
+      font-family: var(--font-body);
+    }
+    .topnav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 36px;
+      padding: 32px 54px 10px 54px;
+      font-family: var(--font-head);
+      font-size: 1.09rem;
+    }
+    .topnav .logo {
+      margin-right: auto;
+      color: var(--white);
+      font-size: 1.2rem;
+      font-family: var(--font-head);
+      letter-spacing: 0.1em;
+      font-weight: 700;
+      user-select: none;
+    }
+    .topnav a {
+      color: var(--subtle);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.03rem;
+      position: relative;
+      transition: color 0.16s;
+      padding-bottom: 2px;
+    }
+    .topnav a.active,
+    .topnav a:hover {
+      color: var(--primary);
+    }
+    .topnav a.active:after,
+    .topnav a:hover:after {
+      content: '';
+      display: block;
+      height: 2px;
+      width: 100%;
+      background: var(--primary);
+      border-radius: 1px;
+      margin-top: 4px;
+      position: absolute;
+      left: 0; bottom: -1px;
+    }
+    @media (max-width: 900px) {
+      .topnav {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 25px 13px 13px;
       }
+    }
 
-      canvas {
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: -1;
+    .hero-outer {
+      display: flex;
+      align-items: stretch;
+      min-height: 68vh;
+    }
+    .hero-visual {
+      flex: 1.15;
+      position: relative;
+      min-width: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      overflow: visible;
+    }
+    .photo-panel {
+      background: var(--panel);
+      border-radius: 0 30px 30px 0;
+      width: 380px;
+      height: 400px;
+      box-shadow: 0 24px 50px #0007;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: rotate(-7deg);
+      margin-left: -40px;
+    }
+    .photo-panel img {
+      width: 300px;
+      height: 350px;
+      object-fit: cover;
+      border-radius: 16px;
+      box-shadow: 0 9px 32px #000a;
+      background: #25262c;
+    }
+    .hero-content {
+      flex: 1.7;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 0 5vw 0 2vw;
+      min-width: 320px;
+    }
+    .hero-hi {
+      font-family: var(--font-body);
+      font-size: 1.13rem;
+      color: var(--hero-gray);
+      margin-bottom: 6px;
+      margin-top: 7px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      user-select:none;
+    }
+    .hero-title {
+      font-family: var(--font-head);
+      font-size: 2.4rem;
+      color: var(--primary);
+      margin-bottom: 5px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      user-select:none;
+    }
+    .hero-subtitle {
+      font-size: 1.17rem;
+      font-family: var(--font-body);
+      color: var(--white);
+      margin-bottom: 17px;
+      margin-top: 2px;
+      font-weight: 600;
+      user-select:none;
+    }
+    .hero-desc {
+      color: var(--subtle);
+      font-size: 1.08rem;
+      margin-bottom: 18px;
+      max-width: 520px;
+      user-select:none;
+    }
+    .highlighted {
+      color: var(--primary);
+      font-weight: 700;
+      font-family: inherit;
+      padding: 0 3px;
+    }
+    .code-cool {
+      font-size: 2.09rem;
+      font-family: var(--font-head);
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      color: var(--white);
+      line-height: 1.18;
+      margin-top: 28px;
+      margin-bottom: 22px;
+      user-select:none;
+    }
+    .code-cool .green {
+      color: var(--hero-green);
+      font-family: inherit;
+      font-weight: 900;
+      letter-spacing: inherit;
+      font-size: 2.18rem;
+    }
+    .hero-contact {
+      margin: 13px 0 0 0;
+    }
+    .hero-contact a {
+      background: var(--primary);
+      color: var(--deep);
+      font-family: var(--font-head);
+      padding: 10px 28px;
+      border-radius: 24px;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 1.05rem;
+      transition: 0.18s;
+      margin-right: 7px;
+      user-select: none;
+      border: 2px solid var(--primary);
+    }
+    .hero-contact a:hover {
+      color: var(--primary); background: var(--deep);
+      border: 2px solid var(--primary);
+    }
+    @media (max-width: 1100px) {
+      .hero-outer { flex-direction: column; padding: 22px 0 0 0; align-items: center; }
+      .hero-visual, .hero-content { padding: 0 5vw; width: 100%; }
+      .photo-panel { margin-left: 0; margin-bottom: 15px; }
+      .code-cool { font-size: 1.5rem; }
+      .code-cool .green { font-size: 1.55rem; }
+    }
+    .social-strip {
+      position: fixed;
+      top: 46%;
+      right: 27px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      z-index: 10;
+      user-select: none;
+    }
+    .social-strip a {
+      color: var(--subtle);
+      background: #23232a;
+      border-radius: 50%;
+      width: 43px;
+      height: 43px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.43rem;
+      box-shadow: 0 3px 11px #1117;
+      transition: color 0.18s, background 0.13s, transform 0.13s;
+      opacity: 0.85;
+    }
+    .social-strip a:hover { color: var(--primary); background: var(--deep); opacity: 1; transform: scale(1.08);}
+    @media (max-width: 700px) {
+      .social-strip { position: static; flex-direction: row; justify-content: center; right: unset; top: unset; margin: 30px 0 12px 0; width: 100vw;}
+      .social-strip a { width: 39px; height: 39px; font-size: 1.16rem;}
+    }
+    .section-title {
+      color: var(--primary);
+      font-family: var(--font-head);
+      text-transform: uppercase;
+      font-size: 1.33rem;
+      margin-bottom: 24px;
+      letter-spacing: 0.13em;
+      text-align: center;
+    }
+    /* About Section - enhanced */
+    .about-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 38px 30px 29px 30px;
+      margin: 32px auto 32px auto;
+      box-shadow: 0 4px 12px rgb(0 0 0 / 0.08);
+      border: 1.1px solid #e4e8ef;
+      max-width: 1100px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 38px;
+      color: #263238;
+    }
+    .about-card .about-text {
+      flex: 2;
+      min-width: 325px;
+      font-size: 1.13rem;
+      line-height: 1.8;
+    }
+    .about-imgs {
+      display: flex;
+      flex-direction: row;
+      gap: 18px;
+      max-width: 410px;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      margin-top: 22px;
+    }
+    .about-imgs img {
+      border-radius: 13px;
+      width: 175px;
+      height: 120px;
+      object-fit: cover;
+      box-shadow: 0 2px 14px #b9e3c625;
+      border: 1.7px solid #e4e8ef;
+      background: #f5f7fa;
+      transition: transform 0.13s;
+    }
+    .about-imgs img:hover {
+      transform: scale(1.08);
+    }
+    @media (max-width: 920px) {
+      .about-card { flex-direction: column; gap: 23px; }
+      .about-imgs { margin-top: 0; }
+    }
+    /* Skills Section - color icons */
+    .skills-section {
+      padding: 54px 0 33px 0;
+      max-width: 1100px;
+      margin: 0 auto 48px auto;
+      color: var(--deep);
+    }
+    .skills-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px 28px;
+      justify-content: center;
+      margin-top: 6px;
+    }
+    .skill-icon {
+      width: 54px;
+      height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: var(--white);
+      border: 1px solid #e6e8ed;
+      box-shadow: 0 2px 9px #d9dfea33;
+      position: relative;
+      transition: transform 0.13s, box-shadow 0.13s, background 0.11s;
+      cursor: pointer;
+      user-select:none;
+    }
+    .skill-icon img {
+      width: 31px;
+      height: 31px;
+      object-fit: contain;
+      opacity: 1;
+      filter:none;
+      background: none;
+      display: block;
+      transition: opacity 0.13s;
+    }
+    .skill-icon:hover {
+      background: #e9f8f7;
+      box-shadow: 0 4px 17px #2effb425;
+      transform: scale(1.11);
+    }
+    .skill-icon:after {
+      content: attr(title);
+      opacity: 0;
+      position: absolute;
+      bottom: -26px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1a222fd9;
+      color: #fff;
+      font-size: 0.99rem;
+      padding: 5px 13px;
+      border-radius: 6px;
+      pointer-events: none;
+      transition: opacity 0.11s;
+      white-space: nowrap;
+      user-select:none;
+      z-index: 20;
+    }
+    .skill-icon:hover:after,
+    .skill-icon:focus:after {
+      opacity: 1;
+    }
+    .skill-icon span {
+      font-family: var(--font-head);
+      font-size: 1.12rem;
+      color: #2effb4;
+      font-weight: 700;
+      user-select:none;
+      letter-spacing: 0.04em;
+    }
+    /* Projects Section */
+    .projects-section {
+      padding: 50px 15px 48px 15px;
+      max-width: 1100px;
+      margin: 0 auto 48px auto;
+      color: var(--deep);
+    }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
+      gap: 23px;
+    }
+    .project-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 24px rgb(0 0 0 / 0.06);
+      border: 1px solid #e6e8ed;
+      overflow: hidden;
+      transition: box-shadow 0.13s, transform 0.11s;
+      display: flex;
+      flex-direction: column;
+      cursor: default;
+      user-select:none;
+    }
+    .project-card:hover {
+      box-shadow: 0 12px 37px #2effb425;
+      transform: translateY(-4px);
+    }
+    .project-card img {
+      width: 100%;
+      height: 130px;
+      object-fit: cover;
+      background: #e7f1f0;
+      display: block;
+      user-select:none;
+    }
+    .project-body {
+      padding: 13px 16px 19px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .project-title {
+      font-size: 1.11rem;
+      color: var(--primary);
+      font-weight: 700;
+      user-select:none;
+    }
+    .project-desc {
+      font-size: 0.99rem;
+      color: #627d7a;
+      margin: 4px 0 0 0;
+      user-select:none;
+    }
+    .project-link {
+      color: var(--primary);
+      margin-top: 12px;
+      display: inline-block;
+      font-weight: 500;
+      user-select:none;
+    }
+    .project-link:hover {
+      color: #18a586;
+      text-decoration: underline;
+    }
+    .contact-section {
+      background: #e7f1f0;
+      padding: 38px 0 38px 0;
+      user-select:none;
+      max-width: 1000px;
+      margin: 0 auto 48px auto;
+      border-radius: var(--radius);
+    }
+    .contact-head {
+      font-size: 1.23rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+      text-align: center;
+      color: var(--deep);
+      letter-spacing: 0.05em;
+      font-family: var(--font-head);
+    }
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 33px;
+      margin: 0 auto;
+      font-size: 1.65rem;
+    }
+    .contact-links a {
+      color: #627d7a;
+      transition: color 0.14s, transform 0.12s;
+    }
+    .contact-links a:hover {
+      color: var(--primary);
+      transform: scale(1.14);
+    }
+    footer {
+      text-align: center;
+      color: #859da6;
+      font-size: 0.98rem;
+      margin: 38px 0;
+      user-select:none;
+    }
+    @media (max-width: 760px) {
+      .about-card {
+        flex-direction: column;
+        gap: 18px;
+        padding: 30px 10px;
       }
-
-      header#header .inner {
-        max-width: 600px;
-        margin: 0 auto;
-        padding: 100px 20px 40px 20px;
-        background: rgba(0, 0, 0, 0.4);
-        border-radius: 20px;
-        backdrop-filter: blur(8px);
-        z-index: 1;
-        position: relative;
-        text-align: center;
-      }
-
-      header#header .inner img {
-        border-radius: 50%;
-        width: 240px;
-        height: 240px;
-        object-fit: cover;
-        box-shadow: none;
-        margin-bottom: 20px;
-      }
-
-      h1, h2, h3 {
-        color: #ffffff;
-        text-shadow: none;
-      }
-
-      section {
-        padding: 80px 10vw;
-        position: relative;
-        z-index: 1;
-      }
-
-      .button {
-        background: linear-gradient(90deg, #00f2ff, #0047ff);
-        padding: 12px 30px;
-        border-radius: 30px;
-        border: none;
-        color: white;
-        font-size: 18px;
-        box-shadow: none;
-        cursor: pointer;
-        transition: all 0.3s ease-in-out;
-      }
-
-      .button:hover {
-        transform: scale(1.05);
-        background: #0047ff;
-      }
-
-      .project-grid {
-        display: flex;
-        flex-wrap: wrap;
+      .about-imgs {
         justify-content: center;
-        gap: 40px;
       }
-
-      .work-item {
-        width: 300px;
-        text-align: center;
+      .topnav {
+        padding: 24px 16px 16px;
       }
-
-      .work-item img {
-        border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.7);
-        object-fit: cover;
-        width: 100%;
-        height: 220px;
-        transition: transform 0.4s ease-in-out;
+      .topnav a {
+        font-size: 1rem;
       }
-
-      .work-item img:hover {
-        transform: scale(1.08);
+      .hero-content {
+        max-width: 95vw;
       }
-
-      .contact-card {
-        background: rgba(0, 0, 0, 0.5);
-        border-radius: 20px;
-        padding: 40px;
-        text-align: center;
-        box-shadow: none;
-        backdrop-filter: blur(8px);
-        margin-bottom: 60px;
+      .projects-section {
+        padding: 30px 6px 40px 6px;
       }
-
-      .contact-card a {
-        display: inline-block;
-        margin: 10px;
-        font-size: 20px;
-        color: #00f2ff;
-        text-decoration: none;
+      .skills-section {
+        padding: 40px 6px 35px 6px;
       }
-
-      .leet-badge {
-        margin-top: 15px;
-        display: inline-block;
+      .contact-section {
+        margin: 0 6px 40px;
       }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="topnav" aria-label="Primary">
+    <span class="logo">ATISHAY JAIN</span>
+    <a href="#about" class="active">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </nav>
 
-      .skill-badges {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 15px;
-        padding: 20px;
-      }
-
-      .skill-badge {
-        background: rgba(0, 242, 255, 0.1);
-        border: 1px solid #00f2ff;
-        color: #00f2ff;
-        padding: 10px 20px;
-        border-radius: 30px;
-        font-size: 16px;
-        font-weight: 600;
-        text-transform: uppercase;
-        transition: all 0.3s ease;
-        box-shadow: 0 0 10px rgba(0, 242, 255, 0.3);
-      }
-
-      .skill-badge:hover {
-        background: #00f2ff;
-        color: #000;
-        transform: scale(1.05);
-      }
-
-      footer {
-        text-align: center;
-        padding: 50px 0;
-        font-size: 14px;
-        color: #aaa;
-      }
-    </style>
-  </head>
-  <body class="is-preload">
-
-    <!-- Other existing content stays here -->
-
-
-    </style>
-  </head>
-  <body class="is-preload">
-    <script src="https://cdn.jsdelivr.net/npm/three@0.157.0/build/three.min.js"></script>
-    <script>
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-      const renderer = new THREE.WebGLRenderer({ alpha: true });
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      document.body.appendChild(renderer.domElement);
-
-      const starGeometry = new THREE.BufferGeometry();
-      const starCount = 1000;
-      const positions = new Float32Array(starCount * 3);
-      for (let i = 0; i < starCount * 3; i++) {
-        positions[i] = (Math.random() - 0.5) * 100;
-      }
-
-      starGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-      const starMaterial = new THREE.PointsMaterial({ color: 0xffffff });
-      const stars = new THREE.Points(starGeometry, starMaterial);
-      scene.add(stars);
-      camera.position.z = 5;
-
-      function animate() {
-        requestAnimationFrame(animate);
-        stars.rotation.y += 0.0009;
-        renderer.render(scene, camera);
-      }
-      animate();
-
-      window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-      });
-    </script>
-
-    <header id="header">
-      <div class="inner animate__animated animate__fadeInDown">
-        <img src="images/myphoto_4.jpg" alt="Atishay's Photo" />
-        <h1>Hi, I'm Atishay</h1>
-        <p>Innovator | AI/ML Enthusiast | Robotics Lead @ JIIT</p>
+  <!-- Hero Section Split -->
+  <div class="hero-outer">
+    <div class="hero-visual">
+      <div class="photo-panel">
+        <img src="images/myphoto_4.jpg" alt="Atishay Jain Headshot"/>
       </div>
-    </header>
-
-    <section id="one">
-  <h2>About Me</h2>
-  <p>
-    A curious individual with a passion for innovation. With a strong foundation in technology and a drive to explore the latest advancements, I'm excited to dive into the exciting realms of Machine Learning and Artificial Intelligence.
-    <br><br>
-    From Python, C++, and TensorFlow to Langchain and Hugging Face Transformers — I thrive at the intersection of ideas and implementation.
-    I'm Technical Lead at uCR Robotics Hub and have interned as an AI Intern at Orbo.AI.
-    My toolbox includes ROS, DSA, GitHub, CI/CD, and even 3D deployments like this very site!
-  </p>
-  
-  <!-- Downward arrow instead of button -->
-  <div style="text-align: center; margin-top: 40px;">
-    <a href="#three" style="font-size: 38px; color: #00f2ff;">
-      <i class="fas fa-angle-down animate__animated animate__fadeInDown animate__infinite infinite"></i>
-    </a>
+    </div>
+    <div class="hero-content">
+      <div class="hero-hi">Hello, I'm</div>
+      <div class="hero-title">Atishay Jain</div>
+      <div class="hero-subtitle">GenAI Engineer & Robotics Lead</div>
+      <div class="hero-desc">
+        I design and build intelligent, beautiful autonomous systems—from LLM agents to real-world robotics.<br />
+        <span class="highlighted">Pushing the future, one innovation at a time.</span>
+      </div>
+      <div class="code-cool">
+        I code cool <span class="green">websites</span>
+      </div>
+      <div class="hero-contact">
+        <a href="#contact">Let’s Connect</a>
+      </div>
+    </div>
   </div>
-</section>
 
-    <section id="three">
-      <h2>Projects</h2>
-      <div class="project-grid">
-        <article class="work-item">
-          <a href="https://github.com/techinfo123/CollegeFestsWebsite_prototype_c-">
-            <img src="images/college_fest.webp" alt="College Fest Website" />
-          </a>
-          <h3>College Fest Website Prototype</h3>
-        </article>
-        <article class="work-item">
-          <a href="https://github.com/techinfo123/Ev_charging-">
-            <img src="images/charge.webp" alt="EV Charging" />
-          </a>
-          <h3>EV Charging Website</h3>
-        </article>
-        <article class="work-item">
-  <a href="https://algorithm-visualizer-uq3c.onrender.com/" target="_blank">
-    <img src="images/sort.png" alt="Algorithm Visualizer" />
-  </a>
-  <h3>Algorithm Visualizer</h3>
-</article>
+  <!-- Social Icon Vertical Strip -->
+  <div class="social-strip">
+    <a href="https://linkedin.com/in/atishay-jain-1a6b24251/" title="LinkedIn" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+    <a href="https://x.com/jatishay887" title="Twitter" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+    <a href="https://github.com/techinfo123" title="GitHub" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+    <a href="mailto:your@email.com" title="Email" aria-label="Email"><i class="fas fa-envelope"></i></a>
+  </div>
 
-        <article class="work-item">
-          <a href="https://flask-ml-project-rcv0.onrender.com/predict">
+  <main>
+    <!-- ABOUT -->
+    <section class="about-card" id="about">
+      <div class="about-text">
+        <h2 class="section-title">About Me</h2>
+        <p>
+          I'm <strong>Atishay Jain</strong>, a passionate technologist crafting the future with code. As a <strong>GenAI Engineer</strong> and <strong>Robotics Lead</strong>, I specialize in building systems that can think, reason, and learn — from LLM-powered agents to autonomous robots that navigate the real world.<br /><br />
+          Currently pursuing my B.Tech in ECE at JIIT, I’ve interned at <strong>Orbo.AI</strong> and <strong>AIensured.com</strong>, where I led initiatives in OCR, ML pipelines, and model interpretability. My stack includes <strong>TensorFlow, Streamlit, LangChain, MLflow</strong> and I’m actively working with tools like <strong>CrewAI, FastAPI, AutoGen, and Hugging Face</strong>.<br /><br />
+          As the <strong>Technical Lead</strong> at uCR Robotics Hub, I lead a team in designing and deploying real-world autonomous and manual robotic solutions showcased in college expos. I thrive on innovation and mentorship — pushing limits, breaking silos, and transforming abstract ideas into AI-driven products.<br /><br />
+          Beyond the code, I believe in ethical AI, system reliability, and storytelling through interactive, immersive interfaces. You're not just seeing my work — you're experiencing my vision. Let’s connect and build the future.
+        </p>
+      </div>
+      <div class="about-imgs" aria-hidden="true">
+        <img src="images/charge.webp" alt="EV Project" />
+        <img src="images/movie.webp" alt="Movie Project" />
+        <img src="images/text.jpg" alt="Text Analysis" />
+        <img src="images/flight.png" alt="Flight Price" />
+      </div>
+    </section>
+    <!-- SKILLS -->
+    <section class="skills-section" id="skills">
+      <h2 class="section-title">Skills &amp; Technologies</h2>
+      <div class="skills-bar" role="list" aria-label="Technical skills and tools">
+        <span class="skill-icon" title="Python"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python logo" /></span>
+        <span class="skill-icon" title="C++"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++ logo" /></span>
+        <span class="skill-icon" title="TensorFlow"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" alt="TensorFlow logo" /></span>
+        <span class="skill-icon" title="PyTorch"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch logo" /></span>
+        <span class="skill-icon" title="Keras"><img src="https://upload.wikimedia.org/wikipedia/commons/a/ae/Keras_logo.svg" alt="Keras logo" /></span>
+        <span class="skill-icon" title="NumPy"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg" alt="NumPy logo" /></span>
+        <span class="skill-icon" title="Pandas"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" alt="Pandas logo" /></span>
+        <span class="skill-icon" title="Scikit-learn"><img src="C:\Users\Atishay\OneDrive\Desktop\portfolio_website\images\sklearn.png" /></span>
+        <span class="skill-icon" title="OpenCV"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opencv/opencv-original.svg" alt="OpenCV logo" /></span>
+        <span class="skill-icon" title="Streamlit"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/streamlit/streamlit-original.svg" alt="Streamlit logo" /></span>
+        <span class="skill-icon" title="FastAPI"><img src="https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png" alt="FastAPI logo" /></span>
+        <span class="skill-icon" title="Docker"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker logo" /></span>
+        <span class="skill-icon" title="AWS"><img src="C:\Users\Atishay\OneDrive\Desktop\portfolio_website\images\aws.png" /></span>
+        <span class="skill-icon" title="Hugging Face"><img src="C:\Users\Atishay\OneDrive\Desktop\portfolio_website\images\hugging_face.webp" /></span>
+        <span class="skill-icon" title="HTML5"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5 logo" /></span>
+        <span class="skill-icon" title="CSS3"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3 logo" /></span>
+        <!-- Use real icons where possible; colored initials otherwise: -->
+        <span class="skill-icon" title="MATLAB"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/matlab/matlab-original.svg" alt="MATLAB logo" /></span>
+        <span class="skill-icon" title="Pydantic"><img src="C:\Users\Atishay\OneDrive\Desktop\portfolio_website\images\pydantic.webp" /></span>
+        <span class="skill-icon" title="MLflow"><img src="C:\Users\Atishay\OneDrive\Desktop\portfolio_website\images\mlflow.jpg" /></span>
+        <span class="skill-icon" title="LangChain"><img src="https://avatars.githubusercontent.com/u/109275703?s=200&v=4" alt="LangChain logo" /></span>
+        <span class="skill-icon" title="LlamaIndex"><img src="C:\Users\Atishay\OneDrive\Desktop\portfolio_website\images\llamdaindex.png" /></span>
+        <span class="skill-icon" title="CrewAI"><img src="C:\Users\Atishay\OneDrive\Desktop\portfolio_website\images\crew.webp" /></span>
+        <span class="skill-icon" title="AutoGen"><img src="C:\Users\Atishay\OneDrive\Desktop\portfolio_website\images\render.jpg" /></span>
+        <span class="skill-icon" title="Phidata"><img src="C:\Users\Atishay\OneDrive\Desktop\portfolio_website\images\phidata.png" /></span>
+        <span class="skill-icon" title="TaskingAI"><img src="C:\Users\Atishay\OneDrive\Desktop\portfolio_website\images\taskingAI.png" /></span>
+        <span class="skill-icon" title="Stable Diffusion"><img src="C:\Users\Atishay\OneDrive\Desktop\portfolio_website\images\Stable-Diffusion.jpg" /></span>
+        <span class="skill-icon" title="Render"><img src="C:\Users\Atishay\OneDrive\Desktop\portfolio_website\images\render.jpg" /></span>
+        <span class="skill-icon" title="DSA"><span>DSA</span></span>
+        <span class="skill-icon" title="OOPs"><span>OOP</span></span>
+        <span class="skill-icon" title="VS Code"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="VS Code logo" /></span>
+      </div>
+    </section>
+    <!-- PROJECTS -->
+    <section class="projects-section" id="projects">
+      <h2 class="section-title">Projects</h2>
+      <div class="projects-grid">
+        <div class="project-card">
+          <img src="images/college_fest.webp" alt="College Fest Website" />
+          <div class="project-body">
+            <div class="project-title">College Fest Website</div>
+            <div class="project-desc">C++/Flask web prototype for campus events and registration.</div>
+            <a class="project-link" href="https://github.com/techinfo123/CollegeFestsWebsite_prototype_c-" target="_blank" rel="noopener">View Project</a>
+          </div>
+        </div>
+        <div class="project-card">
+          <img src="images/charge.webp" alt="EV Charging Platform" />
+          <div class="project-body">
+            <div class="project-title">EV Charging Platform</div>
+            <div class="project-desc">IoT cloud-enabled platform for EV charging &amp; fleet management.</div>
+            <a class="project-link" href="https://github.com/techinfo123/Ev_charging-" target="_blank" rel="noopener">View Project</a>
+          </div>
+        </div>
+        <div class="project-card">
+          <img src="images/sort.png" alt="Algorithm Visualizer" />
+          <div class="project-body">
+            <div class="project-title">Algorithm Visualizer</div>
+            <div class="project-desc">Interactive web app for sorting algorithm demos &amp; visual learning.</div>
+            <a class="project-link" href="https://algorithm-visualizer-uq3c.onrender.com/" target="_blank" rel="noopener">View Project</a>
+          </div>
+        </div>
+        <div class="project-card">
           <img src="images/flight.png" alt="Flight Price Prediction" />
-        </a>
-          <h3>Flight Price Prediction</h3>
-        </article>
-        <article class="work-item">
-          <a href="https://techinfo123-movierecommendersystem-app-mlscyg.streamlit.app/">
-            <img src="images/movie.webp" alt="Movie Recommender" />
-          </a>
-          <h3>Movie Recommender System</h3>
-        </article>
-        <article class="work-item">
-          <a href="https://text-sentiment-analyzers.streamlit.app/">
-            <img src="images/text.jpg" alt="Text Sentiment Analysis" />
-          </a>
-          <h3>Text Sentiment Analysis</h3>
-        </article>
+          <div class="project-body">
+            <div class="project-title">Flight Price Predictor</div>
+            <div class="project-desc">Deployed ML model to forecast flight ticket prices.</div>
+            <a class="project-link" href="https://flask-ml-project-rcv0.onrender.com/predict" target="_blank" rel="noopener">View Project</a>
+          </div>
+        </div>
+        <div class="project-card">
+          <img src="images/movie.webp" alt="Movie Recommender" />
+          <div class="project-body">
+            <div class="project-title">Movie Recommender</div>
+            <div class="project-desc">Streamlit app for smart, context-aware movie recommendations.</div>
+            <a class="project-link" href="https://techinfo123-movierecommendersystem-app-mlscyg.streamlit.app/" target="_blank" rel="noopener">View Project</a>
+          </div>
+        </div>
+        <div class="project-card">
+          <img src="images/text.jpg" alt="Text Sentiment Analyzer" />
+          <div class="project-body">
+            <div class="project-title">Text Sentiment Analyzer</div>
+            <div class="project-desc">Real-time feedback and sentiment analysis web tool.</div>
+            <a class="project-link" href="https://text-sentiment-analyzers.streamlit.app/" target="_blank" rel="noopener">View Project</a>
+          </div>
+        </div>
+        <div class="project-card">
+          <img src="images/Self_driving.webp" alt="Self Driving EV" />
+          <div class="project-body">
+            <div class="project-title">Self Driving EV</div>
+            <div class="project-desc">Campus-scale autonomous electric vehicle demonstration.</div>
+          </div>
+        </div>
+        <div class="project-card">
+          <img src="images/blog.webp" alt="AI Blog Generator" />
+          <div class="project-body">
+            <div class="project-title">AI Blog Generator</div>
+            <div class="project-desc">Long-form content generation with CrewAI, integrated on GitHub.</div>
+            <a class="project-link" href="https://github.com/techinfo123/AI-Blog-Creator-CrewAI" target="_blank" rel="noopener">View Project</a>
+          </div>
+        </div>
+        <div class="project-card">
+          <img src="images/text_extractor.jpg" alt="PDF Text Extractor" />
+          <div class="project-body">
+            <div class="project-title">PDF Text Extractor</div>
+            <div class="project-desc">PDF parsing and table data extraction system.</div>
+          </div>
+        </div>
+        <div class="project-card">
+          <img src="images/food.webp" alt="Food Calorie Estimator" />
+          <div class="project-body">
+            <div class="project-title">Food Calorie Estimator</div>
+            <div class="project-desc">AI-driven food image calorie estimation prototype.</div>
+          </div>
+        </div>
+        <div class="project-card">
+          <img src="images/rag.png" alt="RAG Q&A System" />
+          <div class="project-body">
+            <div class="project-title">RAG Q&A System</div>
+            <div class="project-desc">Custom retrieval-augmented generation Q&A for documents.</div>
+          </div>
+        </div>
       </div>
     </section>
-
-    <section id="skills">
-      <h2 style="text-align:center;">Skills & Technologies</h2>
-      <div class="skill-badges">
-        <span class="skill-badge">Python</span>
-        <span class="skill-badge">C++</span>
-        <span class="skill-badge">HTML</span>
-        <span class="skill-badge">CSS</span>
-        <span class="skill-badge">JavaScript</span>
-        <span class="skill-badge">Java</span>
-        <span class="skill-badge">Flask</span>
-        <span class="skill-badge">TensorFlow</span>
-        <span class="skill-badge">Hugging Face</span>
-        <span class="skill-badge">Langchain</span>
-        <span class="skill-badge">SQL</span>
-        <span class="skill-badge">MATLAB</span>
+    <!-- CONTACT -->
+    <section class="contact-section" id="contact" aria-label="Contact information">
+      <div class="contact-head">Connect With Me</div>
+      <div class="contact-links">
+        <a href="https://www.linkedin.com/in/atishay-jain-1a6b24251/" target="_blank" title="LinkedIn" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        <a href="https://x.com/jatishay887" target="_blank" title="Twitter" rel="noopener" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="https://www.instagram.com/atishay_jain005/" target="_blank" title="Instagram" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://techinfo566.blogspot.com/" target="_blank" title="Blogger" rel="noopener" aria-label="Blogger"><i class="fab fa-blogger"></i></a>
+        <a href="https://github.com/techinfo123" target="_blank" title="GitHub" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        <a href="https://leetcode.com/atishay040/" target="_blank" title="LeetCode" rel="noopener" aria-label="LeetCode"><i class="fa-solid fa-code"></i></a>
+        <a href="https://www.kaggle.com/ati123" target="_blank" title="Kaggle" rel="noopener" aria-label="Kaggle"><i class="fab fa-kaggle"></i></a>
+        <a href="mailto:your@email.com" title="Email" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
       </div>
     </section>
-
-    <section id="coding">
-  <h2 style="text-align:center;">Coding</h2>
-  <div class="contact-card">
-    <p>I love solving coding challenges and improving my problem-solving skills!</p>
-    <img src="images/profileCard.png" alt="Coding Profile Card"
-         style="width: 100%; max-width: 600px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.6);">
-  </div>
-</section>
-
-
-
-
-   <section id="contact">
-  <h2 style="text-align:center;">Contact Me</h2>
-
-  <div class="contact-card">
-    <h3>Social Profiles</h3>
-    <a href="https://www.linkedin.com/in/atishay-jain-1a6b24251/" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
-    <a href="https://x.com/jatishay887" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
-    <a href="https://www.instagram.com/atishay_jain005/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-    <a href="https://techinfo566.blogspot.com/" target="_blank"><i class="fab fa-blogger"></i> Blogger</a>
-  </div>
-
-  <div class="contact-card">
-    <h3>Tech Platforms</h3>
-    <a href="https://github.com/techinfo123" target="_blank"><i class="fab fa-github"></i> GitHub</a>
-    <a href="https://leetcode.com/atishay040/" target="_blank">
-      <img src="https://img.shields.io/badge/LeetCode-102_Problems_Solved-orange?logo=leetcode" alt="LeetCode Profile"
-           style="margin-top:10px; border-radius: 10px;">
-    </a>
-    <a href="https://www.kaggle.com/ati123" target="_blank"><i class="fab fa-kaggle"></i> Kaggle</a>
-  </div>
-</section>
-
-
-
-
-
+  </main>
+  <footer>
+    &copy; 2024 Atishay Jain. Designed with heart and vision.
+  </footer>
+</body>
+</html>
